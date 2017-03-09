@@ -13,7 +13,7 @@ var addItem = function(state, text) {
 var renderList = function(state, element){
 	var itemHTML = "";
 	for (i = 0; i < state.items.length; i++){
-		itemHTML += "<li>";
+		itemHTML += "<li data-id='"+i+"'>";
 		itemHTML += '<span class="shopping-item'; 
 		if (state.items[i].checked){
 			itemHTML += ' shopping-item-checked';
@@ -35,13 +35,22 @@ var renderList = function(state, element){
 $('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
     addItem(state, $('#shopping-list-entry').val());
+    $('#shopping-list-entry').val(" ");
  	renderList(state, $('.shopping-list'));
- 	
 });
 
-$(document).on('click', '.shopping-item-controls .shopping-item-toggle', function(){ 
-   $('.shopping-item').addClass('shopping-item-checked') 
+$(document).on('click', '.shopping-item-toggle', function(event){ 
+	event.preventDefault();
+   	var item = parseInt($(this).parent().parent().attr('data-id'));
+   	state.items[item].checked = !state.items[item].checked ;
+   	renderList(state, $('.shopping-list'));
 });
 
+$(document).on('click', '.shopping-item-delete', function(event){ 
+   var item = parseInt($(this).parent().parent().attr('data-id'));
+   state.items.splice(item,1);
+   console.log(item);
+   renderList(state, $('.shopping-list'));
+});
 
 
