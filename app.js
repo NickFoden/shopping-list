@@ -36,10 +36,12 @@ $('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
     addItem(state, $('#shopping-list-entry').val());
  	renderList(state, $('.shopping-list'));
+ 	
 });
 
-
-
+$(document).on('click', '.shopping-item-controls .shopping-item-toggle', function(){ 
+   $('.shopping-item').addClass('shopping-item-checked') 
+});
 
 
 
